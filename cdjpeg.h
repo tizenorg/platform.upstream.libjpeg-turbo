@@ -156,15 +156,15 @@ EXTERN(FILE *) write_stdout JPP((void));
 /* miscellaneous useful macros */
 
 #ifdef DONT_USE_B_MODE		/* define mode parameters for fopen() */
-#define READ_BINARY	"r"
-#define WRITE_BINARY	"w"
+#define READ_BINARY	"re"
+#define WRITE_BINARY	"we"
 #else
 #ifdef VMS			/* VMS is very nonstandard */
 #define READ_BINARY	"rb", "ctx=stm"
 #define WRITE_BINARY	"wb", "ctx=stm"
 #else				/* standard ANSI-compliant case */
-#define READ_BINARY	"rb"
-#define WRITE_BINARY	"wb"
+#define READ_BINARY	"rbe"
+#define WRITE_BINARY	"wbe"
 #endif
 #endif
 
