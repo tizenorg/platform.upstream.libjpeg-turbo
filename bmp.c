@@ -112,7 +112,7 @@ int loadbmp(char *filename, unsigned char **buf, int *w, int *h,
 	if(!filename || !buf || !w || !h || dstpf<0 || dstpf>=TJ_NUMPF)
 		_throw("loadbmp(): Invalid argument");
 
-	if((file=fopen(filename, "rb"))==NULL)
+	if((file=fopen(filename, READ_BINARY))==NULL)
 		_throwunix("loadbmp(): Cannot open input file");
 
 	cinfo.err=jpeg_std_error(&jerr.pub);
@@ -196,7 +196,7 @@ int savebmp(char *filename, unsigned char *buf, int w, int h, int srcpf,
 	if(!filename || !buf || w<1 || h<1 || srcpf<0 || srcpf>=TJ_NUMPF)
 		_throw("savebmp(): Invalid argument");
 
-	if((file=fopen(filename, "wb"))==NULL)
+	if((file=fopen(filename, WRITE_BINARY))==NULL)
 		_throwunix("savebmp(): Cannot open output file");
 
 	dinfo.err=jpeg_std_error(&jerr.pub);
