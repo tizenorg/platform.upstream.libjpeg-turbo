@@ -81,9 +81,6 @@ chmod -x README-turbo.txt release/copyright
 # Remove unwanted files
 rm -f %{buildroot}%{_libdir}/lib{,turbo}jpeg.la
 
-# Don't distribute libjpegturbo because it is unversioned
-rm %{buildroot}%{_includedir}/turbojpeg.h
-rm %{buildroot}%{_libdir}/libturbojpeg.so
 rm %{buildroot}%{_bindir}/tjbench
 
 # Remove docs, we'll select docs manually
@@ -101,6 +98,7 @@ rm -rf %{buildroot}%{_datadir}/doc/
 
 %files -n libjpeg
 %defattr(-,root,root)
+%{_libdir}/libturbojpeg.so
 %{_libdir}/libjpeg.so.%{libver}
 %{_libdir}/libjpeg.so.%{major}
 
