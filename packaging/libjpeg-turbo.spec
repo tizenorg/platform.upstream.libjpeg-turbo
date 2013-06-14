@@ -11,17 +11,13 @@ Version:        %{srcver}
 Release:        0
 Summary:        A MMX/SSE2 accelerated library for manipulating JPEG image files
 License:        BSD-3-Clause
-Group:          Productivity/Graphics/Convertors
+Group:          Graphics & UI Framework/Libraries
 Url:            http://sourceforge.net/projects/libjpeg-turbo
 Source0:        http://downloads.sourceforge.net/project/%{name}/%{version}/%{name}-%{version}.tar.gz
 Source1:        baselibs.conf
 BuildRequires:  gcc-c++
 BuildRequires:  libtool
 BuildRequires:  yasm
-Provides:       jpeg = %{version}
-Obsoletes:      jpeg < %{version}
-BuildRoot:      %{_tmppath}/%{name}-%{version}-build
-Conflicts:      jpeg%{major}
 
 %description
 The libjpeg-turbo package contains a library of functions for manipulating
@@ -32,9 +28,10 @@ JPEG images.
 Version:        %{libver}
 Release:        0
 Summary:        The MMX/SSE accelerated JPEG compression/decompression library
-Group:          System/Libraries
+Group:          Graphics & UI Framework/Libraries
 
 Provides:       libjpeg = %{version}
+Provides:       libjpeg8
 Obsoletes:      libjpeg < %{version}
 
 %description -n libjpeg
@@ -45,11 +42,12 @@ JPEG images.
 Version:        %{libver}
 Release:        0
 Summary:        Development Tools for applications which will use the Libjpeg Library
-Group:          Development/Libraries/C and C++
+Group:          Graphics & UI Framework/Development
 
 Provides:       libjpeg-turbo-devel
 Requires:       libjpeg = %{version}
 Provides:       libjpeg-devel = %{version}
+Provides:       libjpeg8-devel
 Obsoletes:      libjpeg-devel < %{version}
 %if "%{major}" != "%{cmajor}"
 Conflicts:      libjpeg-devel
@@ -90,11 +88,12 @@ rm -rf %{buildroot}%{_datadir}/doc/
 
 %postun -n libjpeg -p /sbin/ldconfig
 
+%docs_package
+
 %files
 %defattr(-,root,root)
-%doc release/copyright 
+%license release/copyright 
 %{_bindir}/*
-%doc %{_mandir}/man1/*
 
 %files -n libjpeg
 %defattr(-,root,root)
