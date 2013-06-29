@@ -15,6 +15,7 @@ Group:          Graphics & UI Framework/Libraries
 Url:            http://sourceforge.net/projects/libjpeg-turbo
 Source0:        http://downloads.sourceforge.net/project/%{name}/%{version}/%{name}-%{version}.tar.gz
 Source1:        baselibs.conf
+Source1001: 	libjpeg-turbo.manifest
 BuildRequires:  gcc-c++
 BuildRequires:  libtool
 BuildRequires:  yasm
@@ -60,6 +61,7 @@ files using the libjpeg library.
 
 %prep
 %setup -q
+cp %{SOURCE1001} .
 
 %build
 autoreconf -fiv
@@ -91,17 +93,20 @@ rm -rf %{buildroot}%{_datadir}/doc/
 %docs_package
 
 %files
+%manifest %{name}.manifest
 %defattr(-,root,root)
 %license release/copyright 
 %{_bindir}/*
 
 %files -n libjpeg
+%manifest %{name}.manifest
 %defattr(-,root,root)
 %{_libdir}/libturbojpeg.so
 %{_libdir}/libjpeg.so.%{libver}
 %{_libdir}/libjpeg.so.%{major}
 
 %files -n libjpeg-devel
+%manifest %{name}.manifest
 %defattr(-,root,root)
 %{_includedir}/*.h
 %{_libdir}/libjpeg.so
