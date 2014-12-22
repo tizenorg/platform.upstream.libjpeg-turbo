@@ -1,13 +1,12 @@
 %define major   8
 %define minor   0
 %define micro   2
-%define srcver  1.2.1
 %define libver  %{major}.%{minor}.%{micro}
 # major number of library from jpeg8
 %define cmajor  8
 
 Name:           libjpeg-turbo
-Version:        %{srcver}
+Version:        1.3.1
 Release:        0
 Summary:        A MMX/SSE2 accelerated library for manipulating JPEG image files
 License:        BSD-3-Clause
@@ -15,7 +14,7 @@ Group:          Graphics & UI Framework/Libraries
 Url:            http://sourceforge.net/projects/libjpeg-turbo
 Source0:        http://downloads.sourceforge.net/project/%{name}/%{version}/%{name}-%{version}.tar.gz
 Source1:        baselibs.conf
-Source1001: 	libjpeg-turbo.manifest
+Source1001:     libjpeg-turbo.manifest
 BuildRequires:  gcc-c++
 BuildRequires:  libtool
 BuildRequires:  yasm
@@ -64,19 +63,18 @@ files using the libjpeg library.
 cp %{SOURCE1001} .
 
 %build
-autoreconf -fiv
-%configure --disable-static \
+%reconfigure --disable-static \
            --with-jpeg8
-make %{?_smp_mflags}
+%__make %{?_smp_mflags}
 
 %check
-make test libdir=%{_libdir}
+%__make test libdir=%{_libdir}
 
 %install
 %makeinstall
 
 # Fix perms
-chmod -x README-turbo.txt release/copyright
+chmod -x release/License.rtf README-turbo.txt
 
 # Remove unwanted files
 rm -f %{buildroot}%{_libdir}/lib{,turbo}jpeg.la
@@ -95,13 +93,13 @@ rm -rf %{buildroot}%{_datadir}/doc/
 %files
 %manifest %{name}.manifest
 %defattr(-,root,root)
-%license release/copyright 
+%license release/License.rtf README-turbo.txt README
 %{_bindir}/*
 
 %files -n libjpeg
 %manifest %{name}.manifest
 %defattr(-,root,root)
-%{_libdir}/libturbojpeg.so
+%{_libdir}/libturbojpeg.so*
 %{_libdir}/libjpeg.so.%{libver}
 %{_libdir}/libjpeg.so.%{major}
 
@@ -111,5 +109,3 @@ rm -rf %{buildroot}%{_datadir}/doc/
 %{_includedir}/*.h
 %{_libdir}/libjpeg.so
 %doc coderules.txt jconfig.txt libjpeg.txt structure.txt example.c
-
-%changelog
