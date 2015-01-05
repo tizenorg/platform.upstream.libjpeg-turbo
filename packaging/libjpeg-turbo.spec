@@ -1,7 +1,7 @@
 %define major   8
 %define minor   0
 %define micro   2
-%define srcver  1.2.1
+%define srcver  1.3.1
 %define libver  %{major}.%{minor}.%{micro}
 # major number of library from jpeg8
 %define cmajor  8
@@ -76,7 +76,7 @@ make test libdir=%{_libdir}
 %makeinstall
 
 # Fix perms
-chmod -x README-turbo.txt release/copyright
+chmod -x README-turbo.txt
 
 # Remove unwanted files
 rm -f %{buildroot}%{_libdir}/lib{,turbo}jpeg.la
@@ -95,13 +95,13 @@ rm -rf %{buildroot}%{_datadir}/doc/
 %files
 %manifest %{name}.manifest
 %defattr(-,root,root)
-%license release/copyright 
+%license README-turbo.txt
 %{_bindir}/*
 
 %files -n libjpeg
 %manifest %{name}.manifest
 %defattr(-,root,root)
-%{_libdir}/libturbojpeg.so
+%{_libdir}/libturbojpeg.so.*
 %{_libdir}/libjpeg.so.%{libver}
 %{_libdir}/libjpeg.so.%{major}
 
@@ -109,6 +109,7 @@ rm -rf %{buildroot}%{_datadir}/doc/
 %manifest %{name}.manifest
 %defattr(-,root,root)
 %{_includedir}/*.h
+%{_libdir}/libturbojpeg.so
 %{_libdir}/libjpeg.so
 %doc coderules.txt jconfig.txt libjpeg.txt structure.txt example.c
 
