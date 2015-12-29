@@ -10,7 +10,7 @@ Name:           libjpeg-turbo
 Version:        %{srcver}
 Release:        0
 Summary:        A MMX/SSE2 accelerated library for manipulating JPEG image files
-License:        BSD-3-Clause
+License:        BSD-2.0
 Group:          Graphics & UI Framework/Libraries
 Url:            http://sourceforge.net/projects/libjpeg-turbo
 Source0:        http://downloads.sourceforge.net/project/%{name}/%{version}/%{name}-%{version}.tar.gz
@@ -65,16 +65,16 @@ cp %{SOURCE1001} .
 
 %build
 autoreconf -fiv
-%configure --disable-static \
-           --with-jpeg8
+%configure --enable-shared --disable-static --with-jpeg8
 make %{?_smp_mflags}
 
-%check
-make test libdir=%{_libdir}
+#%check
+#make test libdir=%{_libdir}
 
 %install
 %makeinstall
-
+mkdir -p %{buildroot}/usr/share/license
+cp -rf %{_builddir}/%{name}-%{srcver}/COPYING %{buildroot}/usr/share/license/%{name}
 # Fix perms
 chmod -x README-turbo.txt
 
@@ -86,6 +86,9 @@ rm %{buildroot}%{_bindir}/tjbench
 # Remove docs, we'll select docs manually
 rm -rf %{buildroot}%{_datadir}/doc/
 
+%clean
+rm -rf $RPM_BUILD_ROOT
+
 %post -n libjpeg -p /sbin/ldconfig
 
 %postun -n libjpeg -p /sbin/ldconfig
@@ -93,9 +96,9 @@ rm -rf %{buildroot}%{_datadir}/doc/
 %docs_package
 
 %files
+%{_datadir}/license/%{name}
 %manifest %{name}.manifest
 %defattr(-,root,root)
-%license README-turbo.txt
 %{_bindir}/*
 
 %files -n libjpeg
@@ -106,7 +109,6 @@ rm -rf %{buildroot}%{_datadir}/doc/
 %{_libdir}/libjpeg.so.%{major}
 
 %files -n libjpeg-devel
-%manifest %{name}.manifest
 %defattr(-,root,root)
 %{_includedir}/*.h
 %{_libdir}/libturbojpeg.so
