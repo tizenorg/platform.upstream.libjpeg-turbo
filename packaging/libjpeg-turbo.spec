@@ -1,14 +1,14 @@
 %define major   8
 %define minor   0
 %define micro   2
-%define srcver  1.3.1
+%define srcver  1.4.2
 %define libver  %{major}.%{minor}.%{micro}
 # major number of library from jpeg8
 %define cmajor  8
 
 Name:           libjpeg-turbo
 Version:        %{srcver}
-Release:        0
+Release:        1
 Summary:        A MMX/SSE2 accelerated library for manipulating JPEG image files
 License:        BSD-2.0
 Group:          Graphics & UI Framework/Libraries
